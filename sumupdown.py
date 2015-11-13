@@ -2,19 +2,28 @@
 import datetime
 import math
 
-DATE_FORMAT='%d/%m/%Y'
-
-def decimal_to_hour(decimal_hour, level = 0):
+def _wrap_decimal_to_hour(decimal_hour, level = 0):
     aux = math.modf(decimal_hour)
     level+=1
     if level == 3:
         return int(aux[1])
     else:
-        return str(int(aux[1])) + ':' + str(decimal_to_hour(aux[0]*60, level))
+        return str(int(aux[1])) + ':' + str(_wrap_decimal_to_hour(aux[0]*60, level))
+
+def decimal_to_hour(decimal_hour, level = 0):
+    time_str = _wrap_decimal_to_hour(decimal_hour)
+    return datetime.time(*[int(n) for n in time_str.split(':')])
+
 
 class SumUpDown(object):
+    """
+    >>> time = SumUpDown(datetime.date(2013, 4, 15), -14.408749, 52.1421448)
+    >>> time.calculate()
+    {'start': datetime.time(6, 38, 20), 'end': datetime.time(18, 18, 48)}
+    """
+
     def __init__(self, date, latitude, longitude):
-        self.date = datetime.datetime.strptime(date, DATE_FORMAT).date()
+        self.date = date
         self.latitude = latitude
         self.longitude = longitude
 
@@ -37,14 +46,11 @@ class SumUpDown(object):
         y = math.tan(math.radians(self.latitude))
         return 2.0/15.0 * math.degrees(math.acos(-x*y))
 
-    def get_sum_updown(self):
+    def calculate(self):
         value = self.get_sunshine_hours() / 2
         sumrise = 12 - value + self.get_fixed_longitude()
         sunset = 12 + value + self.get_fixed_longitude()
-        return (decimal_to_hour(sumrise), decimal_to_hour(sunset))
-
-if __name__ == '__main__':
-
-    time = SumUpDown('15/04/2013', -14.408749, 52.1421448)
-    
-    print time.get_sum_updown()
+        return {
+            'start': decimal_to_hour(sumrise),
+            'end': decimal_to_hour(sunset),
+        }

@@ -37,17 +37,17 @@ class SumUpDown(object):
         value = self.longitude - (self.timezone() * 15)
         return value * 60 / 15 / 60
 
-    def get_day_of_year(self):
+    def day_of_year(self):
         """
         >>> today = datetime.date(2015, 11, 16)
         >>> time = SumUpDown(today, 1, 1)
-        >>> time.get_day_of_year()
+        >>> time.day_of_year()
         320
         """
         return int(self.date.strftime('%j'))
 
     def get_decline_of_earth(self):
-        return 23.45 * math.sin(math.radians(360.0/365.0 * (284 + self.get_day_of_year())))
+        return 23.45 * math.sin(math.radians(360.0/365.0 * (284 + self.day_of_year())))
 
     def get_sunshine_hours(self):
         x = math.tan(math.radians(self.get_decline_of_earth()))

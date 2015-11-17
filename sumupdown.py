@@ -70,9 +70,9 @@ class SumUpDown(object):
 
     def calculate(self):
         value = self.get_sunshine_hours() / 2
-        sumrise = 12 - value + self.get_fixed_longitude()
+        sunrise = 12 - value + self.get_fixed_longitude()
         sunset = 12 + value + self.get_fixed_longitude()
         return {
-            'start': decimal_to_hour(sumrise),
+            'start': decimal_to_hour(sunrise),
             'end': decimal_to_hour(sunset),
         }

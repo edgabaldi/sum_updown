@@ -18,25 +18,6 @@ def decimal_to_time(decimal_time):
     return datetime.time(*args)
 
 
-def _wrap_decimal_to_hour(decimal_hour, level = 0):
-    aux = math.modf(decimal_hour)
-    level+=1
-    if level == 3:
-        return int(aux[1])
-    else:
-        return str(int(aux[1])) + ':' + str(_wrap_decimal_to_hour(aux[0]*60, level))
-
-def decimal_to_hour(decimal_hour, level = 0):
-    """
-    >>> decimal_to_hour(1.0)
-    datetime.time(1, 0)
-    >>> decimal_to_hour(23.450)
-    datetime.time(23, 26, 59)
-    """
-    time_str = _wrap_decimal_to_hour(decimal_hour)
-    return datetime.time(*[int(n) for n in time_str.split(':')])
-
-
 class SumUpDown(object):
     """
     >>> time = SumUpDown(datetime.date(2013, 4, 15), -14.408749, 52.1421448)

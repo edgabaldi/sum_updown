@@ -30,11 +30,11 @@ class SumUpDown(object):
         self.latitude = latitude
         self.longitude = longitude
 
-    def get_timezone(self):
+    def timezone(self):
         return math.trunc(self.longitude/15)
 
     def get_fixed_longitude(self):
-        value = self.longitude - (self.get_timezone() * 15)
+        value = self.longitude - (self.timezone() * 15)
         return value * 60 / 15 / 60
 
     def get_day_of_year(self):

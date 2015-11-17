@@ -1,0 +1,4 @@
+*py[co]
+*swp
+.cache
+__pycache__/

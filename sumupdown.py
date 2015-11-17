@@ -38,8 +38,13 @@ class SumUpDown(object):
         return value * 60 / 15 / 60
 
     def get_day_of_year(self):
-        datetuple = self.date.timetuple()
-        return datetuple[7]
+        """
+        >>> today = datetime.date(2015, 11, 16)
+        >>> time = SumUpDown(today, 1, 1)
+        >>> time.get_day_of_year()
+        320
+        """
+        return int(self.date.strftime('%j'))
 
     def get_decline_of_earth(self):
         return 23.45 * math.sin(math.radians(360.0/365.0 * (284 + self.get_day_of_year())))

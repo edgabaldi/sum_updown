@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import datetime
 import math
 
@@ -18,9 +17,9 @@ def decimal_to_time(decimal_time):
     return datetime.time(*args)
 
 
-class SumUpDown(object):
+class SunRange(object):
     """
-    >>> time = SumUpDown(datetime.date(2013, 4, 15), -14.408749, 52.1421448)
+    >>> time = SunRange(datetime.date(2013, 4, 15), -14.408749, 52.1421448)
     >>> time.calculate()
     {'start': datetime.time(6, 38, 20), 'end': datetime.time(18, 18, 48)}
     """
@@ -40,7 +39,7 @@ class SumUpDown(object):
     def day_of_year(self):
         """
         >>> today = datetime.date(2015, 11, 16)
-        >>> time = SumUpDown(today, 1, 1)
+            >>> time = SunRange(today, 1, 1)
         >>> time.day_of_year()
         320
         """

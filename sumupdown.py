@@ -2,6 +2,22 @@
 import datetime
 import math
 
+def decimal_to_time(decimal_time):
+    """
+    >>> decimal_to_time(1.0)
+    datetime.time(1, 0)
+    >>> decimal_to_time(23.450)
+    datetime.time(23, 27)
+    """
+    hours = int(decimal_time)
+    minutes = (decimal_time * 60) % 60
+    seconds = (decimal_time * 3600) % 60
+
+    args = [int(n) for n in [hours, minutes, seconds]]
+
+    return datetime.time(*args)
+
+
 def _wrap_decimal_to_hour(decimal_hour, level = 0):
     aux = math.modf(decimal_hour)
     level+=1
@@ -11,6 +27,12 @@ def _wrap_decimal_to_hour(decimal_hour, level = 0):
         return str(int(aux[1])) + ':' + str(_wrap_decimal_to_hour(aux[0]*60, level))
 
 def decimal_to_hour(decimal_hour, level = 0):
+    """
+    >>> decimal_to_hour(1.0)
+    datetime.time(1, 0)
+    >>> decimal_to_hour(23.450)
+    datetime.time(23, 26, 59)
+    """
     time_str = _wrap_decimal_to_hour(decimal_hour)
     return datetime.time(*[int(n) for n in time_str.split(':')])
 
